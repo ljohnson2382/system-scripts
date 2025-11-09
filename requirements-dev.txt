@@ -1,0 +1,38 @@
+# Development dependencies for system-scripts toolkit
+# Author: Loyd Johnson
+# Date: November 2025
+
+# Include all production requirements
+-r requirements.txt
+
+# Testing frameworks
+pytest>=6.0.0
+pytest-cov>=2.10.0
+pytest-mock>=3.6.0
+
+# Code formatting and linting
+black>=21.0.0
+flake8>=3.8.0
+isort>=5.9.0
+
+# Type checking
+mypy>=0.812
+types-requests>=2.25.0
+types-psutil>=5.8.0
+
+# Documentation
+sphinx>=4.0.0
+sphinx-rtd-theme>=0.5.0
+
+# Development tools
+pre-commit>=2.15.0
+bandit>=1.7.0  # Security linting
+
+# Optional enhanced functionality
+netifaces>=0.11.0  # Enhanced network interface detection
+Send2Trash>=1.8.0  # Safe file deletion
+py-cpuinfo>=8.0.0  # Detailed CPU information
+
+# Windows-specific development tools (Windows only)
+pywin32>=227; sys_platform == "win32"
+wmi>=1.5.1; sys_platform == "win32"

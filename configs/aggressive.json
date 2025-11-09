@@ -1,0 +1,74 @@
+{
+  "_comment": "Aggressive configuration - full automation, automatic reboots",
+  
+  "general": {
+    "log_level": "INFO",
+    "timeout_minutes": 120,
+    "pre_update_health_check": true,
+    "post_update_health_check": true,
+    "backup_important_configs": true
+  },
+  
+  "health_checks": {
+    "disk_warning_threshold": 85,
+    "disk_critical_threshold": 95,
+    "memory_warning_threshold": 85,
+    "check_services": ["ssh"],
+    "check_ports": [22],
+    "remote_hosts": ["8.8.8.8:53"]
+  },
+  
+  "debian": {
+    "enable_auto_updates": true,
+    "auto_reboot": true,
+    "auto_reboot_time": "03:00",
+    "unattended_upgrade": true,
+    "auto_remove": true,
+    "auto_clean": true,
+    "allowed_origins": [
+      "${distro_id}:${distro_codename}",
+      "${distro_id}:${distro_codename}-security",
+      "${distro_id}:${distro_codename}-updates",
+      "${distro_id}ESMApps:${distro_codename}-apps-security",
+      "${distro_id}ESM:${distro_codename}-infra-security"
+    ]
+  },
+  
+  "arch": {
+    "update_system": true,
+    "update_aur": true,
+    "aur_helper": "yay",
+    "auto_resolve_conflicts": true,
+    "clean_cache": true,
+    "clean_orphans": true,
+    "check_mirrors": true,
+    "update_mirrorlist": true,
+    "backup_pacman_db": true
+  },
+  
+  "fedora": {
+    "update_system": true,
+    "install_security_only": false,
+    "auto_reboot": true,
+    "auto_reboot_time": "03:00",
+    "enable_auto_updates": true,
+    "clean_cache": true,
+    "remove_old_kernels": true,
+    "max_kernels_to_keep": 2,
+    "update_firmware": true,
+    "check_repositories": true
+  },
+  
+  "macos": {
+    "update_system": true,
+    "update_app_store": true,
+    "update_homebrew": true,
+    "install_recommended_updates": true,
+    "auto_restart": true,
+    "restart_delay_minutes": 10,
+    "homebrew_upgrade_all": true,
+    "homebrew_cleanup": true,
+    "backup_homebrew_bundle": true,
+    "check_xcode_tools": true
+  }
+}

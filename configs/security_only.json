@@ -1,0 +1,55 @@
+{
+  "_comment": "Security-focused configuration - only installs security updates",
+  
+  "general": {
+    "log_level": "INFO",
+    "timeout_minutes": 30,
+    "pre_update_health_check": true,
+    "post_update_health_check": true,
+    "backup_important_configs": true
+  },
+  
+  "health_checks": {
+    "disk_warning_threshold": 85,
+    "disk_critical_threshold": 95,
+    "memory_warning_threshold": 85,
+    "check_services": ["ssh"],
+    "check_ports": [22],
+    "remote_hosts": ["8.8.8.8:53"]
+  },
+  
+  "debian": {
+    "enable_auto_updates": true,
+    "auto_reboot": false,
+    "unattended_upgrade": true,
+    "auto_remove": false,
+    "auto_clean": false,
+    "allowed_origins": [
+      "${distro_id}:${distro_codename}-security"
+    ]
+  },
+  
+  "arch": {
+    "update_system": true,
+    "update_aur": false,
+    "clean_cache": false,
+    "clean_orphans": false,
+    "backup_pacman_db": true
+  },
+  
+  "fedora": {
+    "update_system": true,
+    "install_security_only": true,
+    "auto_reboot": false,
+    "clean_cache": false,
+    "remove_old_kernels": false
+  },
+  
+  "macos": {
+    "update_system": true,
+    "update_app_store": false,
+    "update_homebrew": false,
+    "install_recommended_updates": true,
+    "auto_restart": false
+  }
+}

@@ -1,0 +1,21 @@
+# Core dependencies for system-scripts toolkit
+# Author: Loyd Johnson
+# Date: November 2025
+
+# System monitoring and information
+# Required for: helpdesk tools, performance analysis, system info gathering
+psutil>=5.8.0
+
+# HTTP requests (for future network diagnostics enhancements)
+# Currently optional, but useful for web connectivity tests
+requests>=2.25.0
+
+# All other dependencies are Python standard library:
+# - os, sys, platform, subprocess, json, logging, socket
+# - datetime, time, tempfile, argparse, typing
+# - No additional packages required for core functionality
+
+# Platform-specific notes:
+# - Windows: Some features may require running as Administrator
+# - Linux/macOS: Some system operations may require sudo access
+# - All platforms: Core functionality works without additional packages

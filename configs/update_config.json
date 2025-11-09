@@ -1,0 +1,91 @@
+{
+  "_comment": "Default configuration for system-scripts auto-update toolkit",
+  
+  "general": {
+    "log_level": "INFO",
+    "timeout_minutes": 60,
+    "pre_update_health_check": true,
+    "post_update_health_check": true,
+    "backup_important_configs": true
+  },
+  
+  "health_checks": {
+    "disk_warning_threshold": 80,
+    "disk_critical_threshold": 90,
+    "memory_warning_threshold": 80,
+    "ssh_timeout": 5,
+    "check_services": [
+      "ssh", 
+      "systemd-resolved"
+    ],
+    "check_ports": [
+      22, 
+      80, 
+      443
+    ],
+    "remote_hosts": [
+      "google.com:80",
+      "8.8.8.8:53"
+    ]
+  },
+  
+  "debian": {
+    "enable_auto_updates": true,
+    "auto_reboot": false,
+    "auto_reboot_time": "02:00",
+    "update_package_lists": true,
+    "unattended_upgrade": true,
+    "auto_remove": true,
+    "auto_clean": true,
+    "mail_on_error": false,
+    "mail_to": "root",
+    "allowed_origins": [
+      "${distro_id}:${distro_codename}-security",
+      "${distro_id}ESMApps:${distro_codename}-apps-security",
+      "${distro_id}ESM:${distro_codename}-infra-security"
+    ],
+    "package_blacklist": []
+  },
+  
+  "arch": {
+    "update_system": true,
+    "update_aur": false,
+    "aur_helper": "yay",
+    "auto_resolve_conflicts": false,
+    "clean_cache": true,
+    "clean_orphans": true,
+    "check_mirrors": true,
+    "update_mirrorlist": false,
+    "backup_pacman_db": true,
+    "ignore_packages": [],
+    "max_parallel_downloads": 5
+  },
+  
+  "fedora": {
+    "update_system": true,
+    "install_security_only": false,
+    "auto_reboot": false,
+    "auto_reboot_time": "02:00",
+    "enable_auto_updates": false,
+    "exclude_packages": [],
+    "clean_cache": true,
+    "remove_old_kernels": true,
+    "max_kernels_to_keep": 3,
+    "update_firmware": false,
+    "check_repositories": true
+  },
+  
+  "macos": {
+    "update_system": true,
+    "update_app_store": true,
+    "update_homebrew": true,
+    "install_recommended_updates": true,
+    "auto_restart": false,
+    "restart_delay_minutes": 5,
+    "homebrew_upgrade_all": true,
+    "homebrew_cleanup": true,
+    "backup_homebrew_bundle": true,
+    "check_xcode_tools": true,
+    "excluded_homebrew_packages": []
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "_comment": "Conservative configuration - minimal changes, maximum safety",
+  
+  "general": {
+    "log_level": "DEBUG",
+    "timeout_minutes": 90,
+    "pre_update_health_check": true,
+    "post_update_health_check": true,
+    "backup_important_configs": true
+  },
+  
+  "health_checks": {
+    "disk_warning_threshold": 75,
+    "disk_critical_threshold": 85,
+    "memory_warning_threshold": 75,
+    "check_services": ["ssh", "systemd-resolved", "networkd"],
+    "check_ports": [22, 80, 443, 53],
+    "remote_hosts": [
+      "google.com:80",
+      "cloudflare.com:80", 
+      "8.8.8.8:53",
+      "1.1.1.1:53"
+    ]
+  },
+  
+  "debian": {
+    "enable_auto_updates": false,
+    "auto_reboot": false,
+    "unattended_upgrade": true,
+    "auto_remove": false,
+    "auto_clean": false,
+    "package_blacklist": [
+      "kernel*",
+      "grub*",
+      "systemd"
+    ]
+  },
+  
+  "arch": {
+    "update_system": true,
+    "update_aur": false,
+    "auto_resolve_conflicts": false,
+    "clean_cache": false,
+    "clean_orphans": false,
+    "update_mirrorlist": false,
+    "backup_pacman_db": true,
+    "ignore_packages": [
+      "linux",
+      "linux-headers",
+      "grub"
+    ]
+  },
+  
+  "fedora": {
+    "update_system": true,
+    "install_security_only": false,
+    "auto_reboot": false,
+    "exclude_packages": [
+      "kernel*",
+      "grub2*",
+      "systemd"
+    ],
+    "clean_cache": false,
+    "remove_old_kernels": false,
+    "update_firmware": false
+  },
+  
+  "macos": {
+    "update_system": true,
+    "update_app_store": false,
+    "update_homebrew": true,
+    "install_recommended_updates": true,
+    "auto_restart": false,
+    "homebrew_upgrade_all": false,
+    "excluded_homebrew_packages": [
+      "node", 
+      "python",
+      "postgresql",
+      "mysql"
+    ]
+  }
+}
