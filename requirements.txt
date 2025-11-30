@@ -10,6 +10,10 @@ psutil>=5.8.0
 # Currently optional, but useful for web connectivity tests
 requests>=2.25.0
 
+# Progress bars and user feedback (optional but recommended)
+# Provides enhanced user experience with visual progress indicators
+tqdm>=4.60.0
+
 # All other dependencies are Python standard library:
 # - os, sys, platform, subprocess, json, logging, socket
 # - datetime, time, tempfile, argparse, typing

@@ -425,15 +425,55 @@ class NetworkDiagnostics:
             return 'major_issues'
 
 
+    def run_with_repair_option(self, target_hosts: List[str] = None) -> Dict[str, any]:
+        """
+        Run diagnostics with option to launch repair module.
+        Demonstrates clean integration between diagnostic and repair modules.
+        """
+        # Run initial diagnostics
+        results = self.run_full_diagnostics(target_hosts)
+        
+        # If issues detected, offer repair option
+        if results['overall_status'] != 'healthy':
+            try:
+                from network_repair import NetworkRepair
+                
+                print(f"\n⚠️  Network issues detected: {results['overall_status']}")
+                print("💡 Automated repair module available!")
+                print("    Use: python network_repair.py --execute-fixes")
+                print("    Or:  python network_toolkit.py --auto-fix --execute-fixes")
+                
+                # Optionally show what fixes would be attempted
+                repair = NetworkRepair(self.logger)
+                fix_preview = repair.run_automated_fixes(results, dry_run=True)
+                
+                if fix_preview['fixes_attempted']:
+                    print(f"\n🔧 Available fixes ({len(fix_preview['fixes_attempted'])}):")
+                    for fix in fix_preview['fixes_attempted'][:3]:  # Show first 3
+                        print(f"   • {fix['description']}")
+                    if len(fix_preview['fixes_attempted']) > 3:
+                        print(f"   • ... and {len(fix_preview['fixes_attempted']) - 3} more")
+                
+            except ImportError:
+                print("💡 Consider using network_repair.py for automated fixes")
+        
+        return results
+
+
 def main():
     """Main function for standalone execution."""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Network diagnostics toolkit')
+    parser = argparse.ArgumentParser(
+        description='Network diagnostics toolkit (diagnostic module only)',
+        epilog='For automated repair capabilities, use network_repair.py or network_toolkit.py'
+    )
     parser.add_argument('--hosts', nargs='+', default=['8.8.8.8', 'google.com'],
                        help='Hosts to test connectivity to')
     parser.add_argument('--verbose', action='store_true',
                        help='Enable verbose logging')
+    parser.add_argument('--with-repair-preview', action='store_true',
+                       help='Show available repair options if issues detected')
     
     args = parser.parse_args()
     
@@ -443,7 +483,11 @@ def main():
     
     # Run diagnostics
     diagnostics = NetworkDiagnostics(logger)
-    results = diagnostics.run_full_diagnostics(args.hosts)
+    
+    if args.with_repair_preview:
+        results = diagnostics.run_with_repair_option(args.hosts)
+    else:
+        results = diagnostics.run_full_diagnostics(args.hosts)
     
     # Print summary
     print(f"\n=== Network Diagnostics Results ===")
@@ -471,6 +515,10 @@ def main():
     ports = results.get('port_scans', {})
     if ports:
         print(f"Open Ports: {len(ports.get('open_ports', []))}")
+        
+    # Suggest next steps
+    if results['overall_status'] != 'healthy' and not args.with_repair_preview:
+        print(f"\n💡 Network issues detected. Run with --with-repair-preview to see available fixes")
 
 
 if __name__ == '__main__':
